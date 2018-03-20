@@ -1,6 +1,6 @@
 #import <vector.h>
 #import <string>
-#import "superhero.h"
+#import <sstream>
 
 template <typename T>
 
@@ -9,19 +9,51 @@ class my_hash {
 public:
     my_hash (std::function< int(std::string) > hash_function) {
         this.hash_function = hash_function;
-        data = vector(17011);
+        data = std::vector(INITIAL_SIZE);
+        numCollisions = 0;
     }
 
-    bool insert (const Superhero & s) {
-        
+    bool insert (const T & t) {
+        bool collides = false;
+
+        // Obtain string representation of t
+        std::stringstream sstream;
+        sstream << t;
+
+        // Finds index to place element at
+        int i = hash_function(sstream.str()) % INITIAL_SIZE;
+
+        // Record collision
+        if (!data[i].empty()){
+            numCollisions++;
+            collides = true;
+        }
+
+        auto it = data[i].begin();
+        data.insert(it, t); // Insert element into front of inner vector
+
+        return collides;
     }
 
 
-    Superhero & get (const std::string name) {
-        
+    T & get (const std::string name) {
+        int i = hash_function(name);
+        for (T t: data[i]){
+           // if (<<t)
+        }
+    }
+
+    int getNumCollisions () {
+        return numCollisions;
     }
 
 private:
-    int *(*hash_function)(int *);
-    vector<vector<T>> data;
+    /* Hash function of choice */
+    std::function< int(std::string) > hash_function;
+    /* Elements stored in a 2d vector */
+    std::vector< std::vector<T> > data;
+    /* Keeps track of collisions */
+    int numCollisions;
+
+    final int INITIAL_SIZE = 17011;
 };
