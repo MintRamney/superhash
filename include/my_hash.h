@@ -1,6 +1,7 @@
-#import <vector.h>
-#import <string>
-#import <sstream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <functional>
 
 template <typename T>
 
@@ -9,7 +10,7 @@ class my_hash {
 public:
     my_hash (std::function< int(std::string) > hash_function) {
         this.hash_function = hash_function;
-        data = std::vector(INITIAL_SIZE);
+        data = std::vector<std::vector<T>>(INITIAL_SIZE);
         numCollisions = 0;
     }
 
@@ -55,5 +56,5 @@ private:
     /* Keeps track of collisions */
     int numCollisions;
 
-    final int INITIAL_SIZE = 17011;
+    const int INITIAL_SIZE = 17011;
 };

@@ -13,8 +13,9 @@ private:
     char eye_color;
     char hair_color;
     std::string gsm;
-    boolean alive;
+    bool alive;
     int appearances;
     std::string first_appearance;
     int year;
-}
+};
+
