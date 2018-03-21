@@ -1,3 +1,4 @@
+#include <iostream>
 #include "my_hash.h"
 #include "csv.h" 
 #include "superhero.h"
@@ -15,15 +16,53 @@ int hash3 (std::string s) {
     }
 
 int main(int argc, char * argv[]) {
+    int collisions1 = 0;
+    int collisions2 = 0;
+    int collisions3 = 0;
+
+
     io::CSVReader<12, io::trim_chars<' '>, io::double_quote_escape<',', '\"'> > in("marvel-wikia-data.csv");
 
     my_hash<superhero> hm1 = my_hash<superhero>(hash1);
     my_hash<superhero> hm2 = my_hash<superhero>(hash2);
     my_hash<superhero> hm3 = my_hash<superhero>(hash3);
 
-    //in.read_header(io::ignore_no_column, "a", "b");
-    //std::string a; std::string b;
+    in.read_header(io::ignore_no_column, "page_id", "name", "urlslug", "ID","ALIGN", "EYE", "HAIR", "SEX", "GSM", "ALIVE", "APPEARANCES", "FIRST APPEARANCE", "Year");
+    int page_id; 
+    std::string name; 
+    std::string urlslug; 
+    std::string id; 
+    std::string alignment; 
+    std::string eye_color; 
+    std::string hair_color;
+    std::string sexString;  // Stored in csv as string, converted to char
+    char sex;
+    std::string gsm; 
+    std::string aliveString; // Stored in csv as string, will be converted to bool
+    bool alive;
+    int appearances; 
+    std::string first_appearance; 
+    int year;
 
-    //while (in.read_row(a, b)){
-   //}
+    superhero hero;
+
+    while (in.read_row(page_id,name,urlslug,id,alignment,eye_color,hair_color,sexString,gsm, aliveString, appearances,first_appearance,year)){
+            sex = sexString[0];
+            alive = (aliveString == "Living Characters");
+
+            hero = new superhero(page_id,urlslug,id,alignment,eye_color,hair_color,sex,gsm,alive,appearances,first_appearance,year);
+
+            if (hm1.insert(hero))
+                collisions1++;
+
+            if (hm2.insert(hero))
+                collisions2++;
+
+            if (hm3.insert(hero))
+                collisions3++;
+    }
+
+    cout << "Collisions in hash map 1: " << collisions1 << endl;
+    cout << "Collisions in hash map 2: " << collisions2 << endl;
+    cout << "Collisions in hash map 3: " << collisions3 << endl;
 }
