@@ -8,8 +8,8 @@ template <typename T>
 class my_hash {
 
 public:
-    my_hash (std::function< int(std::string) > hash_function) {
-        this.hash_function = hash_function;
+    my_hash (std::function< int(std::string) > hash) {
+        hash_function = hash;
         data = std::vector<std::vector<T>>(INITIAL_SIZE);
         numCollisions = 0;
     }
