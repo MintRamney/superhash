@@ -21,13 +21,13 @@ int main(int argc, char * argv[]) {
     int collisions3 = 0;
 
 
-    io::CSVReader<12, io::trim_chars<' '>, io::double_quote_escape<',', '\"'> > in("marvel-wikia-data.csv");
+    io::CSVReader<13, io::trim_chars<' '>, io::double_quote_escape<',', '\"'> > in("marvel-wikia-data.csv");
 
     my_hash<superhero> hm1 = my_hash<superhero>(hash1);
     my_hash<superhero> hm2 = my_hash<superhero>(hash2);
     my_hash<superhero> hm3 = my_hash<superhero>(hash3);
 
-    in.read_header(io::ignore_column_missing, "page_id", "name", "urlslug", "ID","ALIGN", "EYE", "HAIR", "SEX", "GSM", "ALIVE", "APPEARANCES", "FIRST APPEARANCE", "Year");
+    in.read_header(io::ignore_missing_column, "page_id", "name", "urlslug", "ID","ALIGN", "EYE", "HAIR", "SEX", "GSM", "ALIVE", "APPEARANCES", "FIRST APPEARANCE", "Year");
     int page_id; 
     std::string name; 
     std::string urlslug; 
@@ -44,21 +44,21 @@ int main(int argc, char * argv[]) {
     std::string first_appearance; 
     int year;
 
-    superhero hero;
+    superhero* hero;
 
     while (in.read_row(page_id,name,urlslug,id,alignment,eye_color,hair_color,sexString,gsm, aliveString, appearances,first_appearance,year)){
             sex = sexString[0];
             alive = (aliveString == "Living Characters");
 
-            hero = new superhero(page_id,urlslug,id,alignment,eye_color,hair_color,sex,gsm,alive,appearances,first_appearance,year);
+            hero = new superhero(page_id,name,urlslug,id,alignment,eye_color,hair_color,sex,gsm,alive,appearances,first_appearance,year);
 
-            if (hm1.insert(hero))
+            if (hm1.insert(*hero))
                 collisions1++;
 
-            if (hm2.insert(hero))
+            if (hm2.insert(*hero))
                 collisions2++;
 
-            if (hm3.insert(hero))
+            if (hm3.insert(*hero))
                 collisions3++;
     }
 

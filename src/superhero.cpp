@@ -1,3 +1,4 @@
+#include <iostream>
 #include "superhero.h"
 
 superhero::superhero(int page_id, std::string name, std::string urlslug, std::string id, 
@@ -18,5 +19,10 @@ superhero::superhero(int page_id, std::string name, std::string urlslug, std::st
         this->first_appearance = first_appearance;
         this->year = year;
     }
+
+std::ostream& operator<<(std::ostream& os, const superhero& sup) {
+    os << sup.name;
+    return os;
+}
 
 
