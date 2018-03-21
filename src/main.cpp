@@ -27,7 +27,7 @@ int main(int argc, char * argv[]) {
     my_hash<superhero> hm2 = my_hash<superhero>(hash2);
     my_hash<superhero> hm3 = my_hash<superhero>(hash3);
 
-    in.read_header(io::ignore_no_column, "page_id", "name", "urlslug", "ID","ALIGN", "EYE", "HAIR", "SEX", "GSM", "ALIVE", "APPEARANCES", "FIRST APPEARANCE", "Year");
+    in.read_header(io::ignore_column_missing, "page_id", "name", "urlslug", "ID","ALIGN", "EYE", "HAIR", "SEX", "GSM", "ALIVE", "APPEARANCES", "FIRST APPEARANCE", "Year");
     int page_id; 
     std::string name; 
     std::string urlslug; 
@@ -37,7 +37,7 @@ int main(int argc, char * argv[]) {
     std::string hair_color;
     std::string sexString;  // Stored in csv as string, converted to char
     char sex;
-    std::string gsm; 
+    std::string gsm = "N/A"; 
     std::string aliveString; // Stored in csv as string, will be converted to bool
     bool alive;
     int appearances; 
@@ -50,7 +50,7 @@ int main(int argc, char * argv[]) {
             sex = sexString[0];
             alive = (aliveString == "Living Characters");
 
-            hero = new superhero(*page_id,*urlslug,*id,*alignment,*eye_color,*hair_color,*sex,*gsm,*alive,*appearances,*first_appearance,*year);
+            hero = new superhero(page_id,urlslug,id,alignment,eye_color,hair_color,sex,gsm,alive,appearances,first_appearance,year);
 
             if (hm1.insert(hero))
                 collisions1++;
