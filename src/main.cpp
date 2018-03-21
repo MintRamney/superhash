@@ -50,7 +50,7 @@ int main(int argc, char * argv[]) {
             sex = sexString[0];
             alive = (aliveString == "Living Characters");
 
-            hero = new superhero(page_id,urlslug,id,alignment,eye_color,hair_color,sex,gsm,alive,appearances,first_appearance,year);
+            hero = new superhero(*page_id,*urlslug,*id,*alignment,*eye_color,*hair_color,*sex,*gsm,*alive,*appearances,*first_appearance,*year);
 
             if (hm1.insert(hero))
                 collisions1++;
@@ -62,7 +62,7 @@ int main(int argc, char * argv[]) {
                 collisions3++;
     }
 
-    cout << "Collisions in hash map 1: " << collisions1 << endl;
-    cout << "Collisions in hash map 2: " << collisions2 << endl;
-    cout << "Collisions in hash map 3: " << collisions3 << endl;
+    std::cout << "Collisions in hash map 1: " << collisions1 << std::endl;
+    std::cout << "Collisions in hash map 2: " << collisions2 << std::endl;
+    std::cout << "Collisions in hash map 3: " << collisions3 << std::endl;
 }
