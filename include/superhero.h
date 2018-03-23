@@ -3,12 +3,12 @@
 #include <string>
 #include <iostream>
 
-class superhero {
+class Superhero {
 public:
-    superhero(int page_id, std::string name, std::string urlslug, std::string id, std::string alignment, std::string eye_color, std::string hair_color,
+    Superhero(int page_id, std::string name, std::string urlslug, std::string id, std::string alignment, std::string eye_color, std::string hair_color,
     char sex, std::string gsm, bool alive, int appearances, std::string first_appearance, int year);
 
-    friend std::ostream& operator<<(std::ostream& os, const superhero& sup);
+    friend std::ostream& operator<<(std::ostream& os, const Superhero& sup);
 
 private:
      int page_id;

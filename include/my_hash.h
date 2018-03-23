@@ -1,3 +1,6 @@
+#ifndef MY_HASH_H
+#define MY_HASH_H
+
 #include <vector>
 #include <string>
 #include <sstream>
@@ -6,14 +9,21 @@
 
 template <typename T>
 
+/**
+ * Generic hash map with size of 17011. 
+ */ 
 class my_hash {
 
 public:
+ 
     my_hash (std::function< int(std::string) > hash) {
         hash_function = hash;
         data = std::vector<std::vector<T>>(INITIAL_SIZE);
     }
 
+    /**
+     * Inserts element into hashmap
+     */
     bool insert (const T & t) {
         bool collides = false;
 
@@ -50,3 +60,5 @@ private:
 
     const int INITIAL_SIZE = 17011;
 };
+
+#endif
