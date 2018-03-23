@@ -26,7 +26,7 @@ public:
 
         // Record collision
         collides = !data[i].empty();
-        std::cout << "Inserting " << t << " at " << i << "\t Collision: " <<  std::endl;
+        std::cout << "Inserting " << t << " at " << i << "\t Collision: " << collides <<  std::endl;
         // Insert element into front of inner vector
         data[i].insert(data[i].begin(), t); 
         
