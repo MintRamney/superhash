@@ -4,16 +4,21 @@
 #include "superhero.h"
 
 int hash1 (std::string s){
-        return 1;
-    }
+    int hashAddress = 0;
+
+    for (int counter = 0; s[counter]!='\0'; counter++){
+        hashAddress = s[counter] + (hashAddress << 6) + (hashAddress << 16) - hashAddress;
+    }    
+    return hashAddress;
+}
 
 int hash2 (std::string s) {
         return 2;
-    }
+}
 
 int hash3 (std::string s) {
         return 3;
-    }
+}
 
 int main(int argc, char * argv[]) {
     int collisions1 = 0;
@@ -55,11 +60,11 @@ int main(int argc, char * argv[]) {
             if (hm1.insert(*hero))
                 collisions1++;
 
-            if (hm2.insert(*hero))
-                collisions2++;
+            //if (hm2.insert(*hero))
+            //    collisions2++;
 
-            if (hm3.insert(*hero))
-                collisions3++;
+            //if (hm3.insert(*hero))
+            //    collisions3++;
     }
 
     std::cout << "Collisions in hash map 1: " << collisions1 << std::endl;

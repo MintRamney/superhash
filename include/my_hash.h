@@ -31,7 +31,7 @@ public:
         }
 
         auto it = data[i].begin();
-        data.insert(it, t); // Insert element into front of inner vector
+        data[i].insert(it, t); // Insert element into front of inner vector
 
         return collides;
     }

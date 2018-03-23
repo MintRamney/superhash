@@ -17,6 +17,20 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+
+        {
+            "label": "Run test",
+            "type": "shell",
+            "command": "./a.exe",
+            "args": [
+                
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+
         }
     ]
 }
