@@ -26,7 +26,7 @@ public:
 
         // Record collision
         collides = !data[i].empty();
-        std::cout << "Inserting " << t << " at " << i << "\t Collision: " << collides <<  std::endl;
+        //std::cout << "Inserting " << t << " at " << i << "\t Collision: " << collides <<  std::endl;
         // Insert element into front of inner vector
         data[i].insert(data[i].begin(), t); 
         
@@ -44,7 +44,7 @@ public:
 
 private:
     /* Hash function of choice */
-    std::function< int(std::string) > hash_function;
+    std::function< unsigned(std::string) > hash_function;
     /* Elements stored in a 2d vector */
     std::vector< std::vector<T> > data;
 
