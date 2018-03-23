@@ -4,12 +4,13 @@
 #include "superhero.h"
 
 int hash1 (std::string s){
-    int hashAddress = 0;
-
-    for (int counter = 0; s[counter]!='\0'; counter++){
-        hashAddress = s[counter] + (hashAddress << 6) + (hashAddress << 16) - hashAddress;
-    }    
-    return hashAddress;
+    int hashAddress = 5381;
+    for (int counter = 0; counter < s.length(); counter++){
+        hashAddress = ((hashAddress << 5) + hashAddress) + s[counter];
+        
+    }
+    //std::cout << "Address: " << hashAddress << std::endl;
+    return abs (hashAddress);
 }
 /*
 int hash2 (std::string s) {
@@ -20,7 +21,7 @@ int hash3 (std::string s) {
         return 3;
 }
 */
-int main() {
+int main(int argc, char * argv[]) {
     int collisions1 = 0;
     int collisions2 = 0;
     int collisions3 = 0;
@@ -28,7 +29,7 @@ int main() {
 
     io::CSVReader<13, io::trim_chars<' '>, io::double_quote_escape<',', '\"'> > in("marvel-wikia-data.csv");
 
-    my_hash<superhero> hm1 = my_hash<superhero>(hash1);
+    my_hash<superhero> * hm1 = new my_hash<superhero>(hash1);
 //    my_hash<superhero> hm2 = my_hash<superhero>(hash2);
 //    my_hash<superhero> hm3 = my_hash<superhero>(hash3);
 
@@ -49,15 +50,15 @@ int main() {
     std::string first_appearance; 
     int year;
 
-    superhero* hero;
+    //superhero* hero;
 
     while (in.read_row(page_id,name,urlslug,id,alignment,eye_color,hair_color,sexString,gsm, aliveString, appearances,first_appearance,year)){
             sex = sexString[0];
             alive = (aliveString == "Living Characters");
 
-            hero = new superhero(page_id,name,urlslug,id,alignment,eye_color,hair_color,sex,gsm,alive,appearances,first_appearance,year);
+            //hero = new superhero(page_id,name,urlslug,id,alignment,eye_color,hair_color,sex,gsm,alive,appearances,first_appearance,year);
 
-            if (hm1.insert(*hero))
+            if (hm1->insert(superhero(page_id,name,urlslug,id,alignment,eye_color,hair_color,sex,gsm,alive,appearances,first_appearance,year)))
                 collisions1++;
 
             //if (hm2.insert(*hero))
