@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <functional>
+#include <iostream>
 
 template <typename T>
 
@@ -11,7 +12,6 @@ public:
     my_hash (std::function< int(std::string) > hash) {
         hash_function = hash;
         data = std::vector<std::vector<T>>(INITIAL_SIZE);
-        numCollisions = 0;
     }
 
     bool insert (const T & t) {
@@ -25,18 +25,15 @@ public:
         int i = hash_function(sstream.str()) % INITIAL_SIZE;
 
         // Record collision
-        if (!data[i].empty()){
-            numCollisions++;
-            collides = true;
-        }
-
-        auto it = data[i].begin();
-        data[i].insert(it, t); // Insert element into front of inner vector
-
+        collides = !data[i].empty();
+        std::cout << "Inserting " << t << " at " << i << "\t Collision: " <<  std::endl;
+        // Insert element into front of inner vector
+        data[i].insert(data[i].begin(), t); 
+        
         return collides;
     }
 
-
+    //TODO
     T & get (const std::string name) {
         int i = hash_function(name);
         for (T t: data[i]){
@@ -44,17 +41,12 @@ public:
         }
     }
 
-    int getNumCollisions () {
-        return numCollisions;
-    }
 
 private:
     /* Hash function of choice */
     std::function< int(std::string) > hash_function;
     /* Elements stored in a 2d vector */
     std::vector< std::vector<T> > data;
-    /* Keeps track of collisions */
-    int numCollisions;
 
     const int INITIAL_SIZE = 17011;
 };
