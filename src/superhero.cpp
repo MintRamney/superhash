@@ -20,6 +20,10 @@ Superhero::Superhero(int page_id, std::string name, std::string urlslug, std::st
         this->year = year;
     }
 
+
+/**
+ * Object is represented textually as the name of the hero 
+ */
 std::ostream& operator<<(std::ostream& os, const Superhero& sup) {
     os << sup.name;
     return os;
